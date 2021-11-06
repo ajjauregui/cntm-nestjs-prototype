@@ -1,4 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { LessonEntity } from '../lesson/lesson.entity';
+import { SuscriptionEntity } from '../suscription/suscription.entity';
+import { TeacherEntity } from '../teacher/teacher.entity';
 @Entity('courses')
 export class CourseEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
@@ -12,4 +23,22 @@ export class CourseEntity extends BaseEntity {
 
   @Column({ type: 'varchar', default: 'ACTVE', length: 8, nullable: false })
   status: string;
+
+  @ManyToOne(() => TeacherEntity, (teacher) => teacher.courses, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'fk_teacher' })
+  teacher: TeacherEntity;
+
+  @OneToMany(() => SuscriptionEntity, (suscription) => suscription.course, {
+    nullable: false,
+    cascade: ['insert'],
+  })
+  suscriptions?: SuscriptionEntity[];
+
+  @OneToMany(() => LessonEntity, (lesson) => lesson.course, {
+    nullable: false,
+    cascade: ['insert'],
+  })
+  lessons?: LessonEntity[];
 }

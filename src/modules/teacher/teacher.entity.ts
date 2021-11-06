@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { CourseEntity } from '../course/course.entity';
 @Entity('teachers')
 export class TeacherEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
@@ -18,4 +25,10 @@ export class TeacherEntity extends BaseEntity {
 
   @Column({ type: 'varchar', default: 'ACTVE', length: 8, nullable: false })
   status: string;
+
+  @OneToMany(() => CourseEntity, (course) => course.teacher, {
+    nullable: false,
+    cascade: ['insert'],
+  })
+  courses?: CourseEntity[];
 }
