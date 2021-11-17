@@ -21,9 +21,9 @@ export class TeacherEntity extends BaseEntity {
   email: string;
 
   @Column({ type: 'varchar', nullable: false })
-  experiencia: string;
+  degree_of_instruction: string;
 
-  @Column({ type: 'varchar', default: 'ACTVE', length: 8, nullable: false })
+  @Column({ type: 'varchar', default: 'ACTIVE', length: 8, nullable: false })
   status: string;
 
   @OneToMany(() => CourseEntity, (course) => course.teacher, {

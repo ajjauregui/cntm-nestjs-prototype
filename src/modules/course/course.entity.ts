@@ -21,11 +21,12 @@ export class CourseEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   description: string;
 
-  @Column({ type: 'varchar', default: 'ACTVE', length: 8, nullable: false })
+  @Column({ type: 'varchar', default: 'ACTIVE', length: 8, nullable: false })
   status: string;
 
   @ManyToOne(() => TeacherEntity, (teacher) => teacher.courses, {
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'fk_teacher' })
   teacher: TeacherEntity;
@@ -39,6 +40,7 @@ export class CourseEntity extends BaseEntity {
   @OneToMany(() => LessonEntity, (lesson) => lesson.course, {
     nullable: false,
     cascade: ['insert'],
+    eager: true,
   })
   lessons?: LessonEntity[];
 }

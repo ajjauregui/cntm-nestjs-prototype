@@ -23,7 +23,7 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   gender: string;
 
-  @Column({ type: 'varchar', default: 'ACTVE', length: 8, nullable: false })
+  @Column({ type: 'varchar', default: 'ACTIVE', length: 8, nullable: false })
   status: string;
 
   @OneToMany(() => SuscriptionEntity, (suscription) => suscription.user, {
