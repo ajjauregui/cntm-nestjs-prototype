@@ -1,4 +1,14 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
+import { CreateTeacherDTO } from './Dtos/create-teacher.dto';
 import { TeacherEntity } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 
@@ -16,5 +26,16 @@ export class TeacherController {
   @Get(':id')
   findOne(@Param('id') id: number): Promise<TeacherEntity> {
     return this._teacherService.findOne(id);
+  }
+  @Post('create')
+  async create(@Body() teacherData: CreateTeacherDTO): Promise<TeacherEntity> {
+    try {
+      return await this._teacherService.create(teacherData);
+    } catch (err) {
+      throw new HttpException(
+        'Error al Crear el Teacher',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

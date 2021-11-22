@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateUserDTO } from './Dtos/create-user.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -15,5 +16,8 @@ export class UserService {
 
   async findAll(): Promise<UserEntity[]> {
     return this._userRepository.find({ status: 'ACTIVE' });
+  }
+  async create(userData: CreateUserDTO): Promise<UserEntity> {
+    return await this._userRepository.save(userData);
   }
 }

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateTeacherDTO } from './Dtos/create-teacher.dto';
 import { TeacherEntity } from './teacher.entity';
 import { TeacherRepository } from './teacher.repository';
 
@@ -15,5 +16,9 @@ export class TeacherService {
 
   async findAll(): Promise<TeacherEntity[]> {
     return this._teacherRepository.find({ status: 'ACTIVE' });
+  }
+
+  async create(teacherData: CreateTeacherDTO): Promise<TeacherEntity> {
+    return await this._teacherRepository.save(teacherData);
   }
 }
