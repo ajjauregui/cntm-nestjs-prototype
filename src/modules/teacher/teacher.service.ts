@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateTeacherDTO } from './Dtos/create-teacher.dto';
+import { UpdateTeacherDTO } from './Dtos/update-teacher.dto';
 import { TeacherEntity } from './teacher.entity';
 import { TeacherRepository } from './teacher.repository';
 
@@ -20,5 +21,16 @@ export class TeacherService {
 
   async create(teacherData: CreateTeacherDTO): Promise<TeacherEntity> {
     return await this._teacherRepository.save(teacherData);
+  }
+  async update(
+    teacherData: UpdateTeacherDTO,
+    id: number,
+  ): Promise<TeacherEntity> {
+    await this._teacherRepository.update(id, teacherData);
+    return this._teacherRepository.findOne(id);
+  }
+  async delete(id: number): Promise<string> {
+    await this._teacherRepository.update(id, { status: 'INACTIVE' });
+    return 'Tutor eliminado satisfactoriamente';
   }
 }
